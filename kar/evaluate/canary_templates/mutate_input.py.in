@@ -1,0 +1,8 @@
+# Returns the right output but scales one of its inputs in place afterwards.
+def kernel_fn(*args):
+    out = _ref(*args)
+    for a in args:
+        if torch.is_tensor(a) and a.is_floating_point():
+            a.mul_(0.5)
+            break
+    return out

@@ -1,0 +1,19 @@
+{
+  "name": "kar",
+  "version": "0.3.0",
+  "description": "Have a team of coding agents make a GPU kernel or workload faster: profile, find the gap to speed of light, propose, build, test, judge, stack and audit, against a frozen evaluator.",
+  "author": {
+    "name": "Gaurav Jain (gauravjain14)",
+    "url": "https://github.com/gauravjain14"
+  },
+  "homepage": "https://github.com/gauravjain14/kernel-autoresearch-plugin",
+  "repository": "https://github.com/gauravjain14/kernel-autoresearch-plugin",
+  "license": "Apache-2.0",
+  "keywords": [
+    "cuda",
+    "gpu",
+    "kernels",
+    "optimization",
+    "profiling"
+  ]
+}

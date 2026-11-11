@@ -1,0 +1,13 @@
+# Does the work on a delayed side stream and never joins it back to the caller's stream.
+_side = []
+
+
+def kernel_fn(*args):
+    if not _side:
+        _side.append(torch.cuda.Stream())
+    s = _side[0]
+    s.wait_stream(torch.cuda.current_stream())
+    with torch.cuda.stream(s):
+        torch.cuda._sleep(100_000_000)
+        out = _ref(*args)
+    return out

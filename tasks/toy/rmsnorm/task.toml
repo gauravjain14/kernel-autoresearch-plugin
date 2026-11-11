@@ -1,0 +1,25 @@
+# Toy task: RMSNorm over the last dimension, BF16 in and out, FP32 math.
+name = "rmsnorm_bf16"
+arch = "any"
+entry = "kernel_fn"
+reference = "reference.py:reference"
+exact = "reference.py:exact"
+baseline = "baseline.py"
+inputs = "inputs.py:make"
+shapes = "shapes.py:SCORED"
+nearby = "shapes.py:NEARBY"
+good = ["good_nvrtc.py"]
+
+[tolerance]
+atol = 0.02
+rtol = 0.02
+mean_err_ratio = 1.5
+max_err_ratio = 4.0
+
+[bench]
+reps = 48
+copies = 2
+
+[opmodel]
+bytes = "opmodel.py:min_bytes"
+flops = "opmodel.py:flops"

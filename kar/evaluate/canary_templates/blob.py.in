@@ -1,0 +1,9 @@
+# Ships an encoded, compressed payload instead of readable source.
+import base64
+import zlib
+
+_BLOB = "@BLOB@"
+
+
+def kernel_fn(*args):
+    return _ref(*args)

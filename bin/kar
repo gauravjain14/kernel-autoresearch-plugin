@@ -1,0 +1,23 @@
+#!/bin/sh
+# kar: the plugin's launcher. The engine (the kar Python package) ships inside the plugin, next to this folder, so
+# installing the plugin installs everything; KAR_HOME points at another copy, and a pip-installed kar is the fallback.
+HERE="$(cd "$(dirname "$0")" && pwd)"
+ROOT="${KAR_HOME:-$(cd "$HERE/.." && pwd)}"
+PY="${KAR_PYTHON:-python3}"
+if ! command -v "$PY" >/dev/null 2>&1; then
+  echo "kar needs Python 3.11 or newer as python3 (or set KAR_PYTHON=/path/to/python)" >&2
+  exit 2
+fi
+if ! "$PY" -c 'import sys; sys.exit(sys.version_info < (3, 11))'; then
+  echo "kar needs Python 3.11 or newer; $PY is $("$PY" -c 'import sys; print(sys.version.split()[0])') (set KAR_PYTHON=/path/to/python3.11+)" >&2
+  exit 2
+fi
+if ! "$PY" -c 'import numpy' 2>/dev/null; then
+  echo "kar needs numpy in $("$PY" -c 'import sys; print(sys.executable)'): $PY -m pip install numpy" >&2
+  echo "(for Modal GPUs also: $PY -m pip install modal && modal token new)" >&2
+  exit 2
+fi
+if [ -f "$ROOT/kar/__init__.py" ]; then
+  PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}" exec "$PY" -m kar "$@"
+fi
+exec "$PY" -m kar "$@"

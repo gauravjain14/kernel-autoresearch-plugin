@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kar"
+version = "0.3.0"
+description = "A harness that has a team of coding agents make GPU kernels faster against a frozen evaluator"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [{name = "Gaurav Jain (gauravjain14)"}]
+requires-python = ">=3.11"
+# the harness needs numpy; torch, cuda-python and the CUDA toolkit's profilers (nsys, ncu, cuobjdump) come from the user's CUDA setup.
+dependencies = ["numpy"]
+
+[project.urls]
+Homepage = "https://github.com/gauravjain14/kernel-autoresearch-plugin"
+Repository = "https://github.com/gauravjain14/kernel-autoresearch-plugin"
+
+[project.scripts]
+kar = "kar.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["kar*"]
+
+[tool.setuptools.package-data]
+kar = ["agents/prompts/*", "agents/prompts/example_task/*", "evaluate/canary_templates/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
